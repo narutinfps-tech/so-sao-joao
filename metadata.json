@@ -1,0 +1,6 @@
+{
+  "name": "Página de Vendas - Kit São João em Inglês",
+  "description": "Página de vendas de alta conversão para o Kit São João em Inglês - 40 Atividades Prontas para Ensino Médio.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

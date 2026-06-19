@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  
+  --color-primary: #0A1931;
+  --color-primary-light: #15305B;
+  --color-accent-amber: #FFC93C;
+  --color-accent-gold: #F5A623;
+  --color-accent-red: #D9383A;
+  --color-brand-green: #2A9D8F;
+  --color-brand-orange: #E76F51;
+}
+
+@keyframes banner-float {
+  0%, 100% { transform: translateY(0px) rotate(0.5deg); }
+  50% { transform: translateY(-4px) rotate(-0.5deg); }
+}
+
+@keyframes light-glow {
+  0%, 100% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-flag-float {
+  animation: banner-float 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: light-glow 3s ease-in-out infinite;
+}
+
+/* Texture pattern of paper / school grid */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(219, 228, 242, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(219, 228, 242, 0.4) 1px, transparent 1px);
+}
+
+.bg-dot-pattern {
+  background-size: 20px 20px;
+  background-image: radial-gradient(rgba(21, 48, 91, 0.08) 1.5px, transparent 1.5px);
+}
+
+/* Glassmorphism utility */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* Custom interactive inputs styling */
+input::placeholder {
+  color: #94a3b8;
+}
+
