@@ -109,7 +109,7 @@ export default function App() {
             Receba um PDF pronto para imprimir, com atividades coloridas, conteudistas e temáticas para deixar suas aulas de inglês mais criativas no período junino.
           </p>
 
-          {/* New Promotional Mockup (Prinstine transparent cutout) */}
+          {/* New Promotional Mockup (Background removed) */}
           <div className="my-8 flex justify-center bg-transparent relative z-10 w-full overflow-hidden">
             <img 
               src={mockupNew} 
