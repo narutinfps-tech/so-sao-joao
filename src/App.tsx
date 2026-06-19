@@ -32,8 +32,8 @@ import {
 
 import { PAIN_POINTS, BENEFITS, TESTIMONIALS, FAQ_ITEMS, ACTIVITY_PREVIEWS } from './data';
 import { Bandeirinhas, Fogueira, BalaoJunino, Milho, ChapeuPalha, Sanfona } from './components/JuninaDecorations';
-// @ts-expect-error - background-free image asset module
-import mockupNoBg from './mockup_nobg.png';
+// @ts-expect-error - image asset module
+import mockupNew from './mockup_new.png';
 
 export default function App() {
   // Configurable values
@@ -109,12 +109,12 @@ export default function App() {
             Receba um PDF pronto para imprimir, com atividades coloridas, conteudistas e temáticas para deixar suas aulas de inglês mais criativas no período junino.
           </p>
 
-          {/* Imagem Promocional de São João (Fundo Totalmente Removido / Sem Moldura) */}
+          {/* New Promotional Mockup (Prinstine transparent cutout) */}
           <div className="my-8 flex justify-center bg-transparent relative z-10 w-full overflow-hidden">
             <img 
-              src={mockupNoBg} 
-              alt="Materiais São João em Inglês" 
-              className="w-full max-w-full md:max-w-3xl h-auto bg-transparent object-contain select-none transform hover:scale-[1.02] transition-transform duration-300 filter drop-shadow-[0_15px_15px_rgba(0,0,0,0.3)]"
+              src={mockupNew} 
+              alt="Atividades de São João" 
+              className="w-full max-w-full md:max-w-3xl h-auto bg-transparent object-contain select-none transform hover:scale-[1.01] transition-transform duration-300 filter drop-shadow-[0_12px_20px_rgba(0,0,0,0.18)]"
             />
           </div>
 
