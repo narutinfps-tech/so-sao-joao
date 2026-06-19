@@ -32,8 +32,7 @@ import {
 
 import { PAIN_POINTS, BENEFITS, TESTIMONIALS, FAQ_ITEMS, ACTIVITY_PREVIEWS } from './data';
 import { Bandeirinhas, Fogueira, BalaoJunino, Milho, ChapeuPalha, Sanfona } from './components/JuninaDecorations';
-// @ts-expect-error - image asset module
-import mockupNew from './mockup_new.png';
+import { mockupBase64 as mockupNew } from './mockup_data';
 
 export default function App() {
   // Configurable values
