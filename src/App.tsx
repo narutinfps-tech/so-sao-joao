@@ -26,14 +26,31 @@ import {
   CreditCard,
   Mail,
   Flame,
-  ThumbsUp,
-  FileCode
+  ThumbsUp
 } from 'lucide-react';
 
 import { PAIN_POINTS, BENEFITS, TESTIMONIALS, FAQ_ITEMS, ACTIVITY_PREVIEWS } from './data';
 import { Bandeirinhas, Fogueira, BalaoJunino, Milho, ChapeuPalha, Sanfona } from './components/JuninaDecorations';
 import { mockupBase64 as mockupNew } from './mockup_data';
 import { motion } from 'motion/react';
+
+const carouselRow1 = [
+  "https://i.ibb.co/27rQLrjP/Chat-GPT-Image-19-de-jun-de-2026-21-07-12-1.png",
+  "https://i.ibb.co/77B7Dkm/Chat-GPT-Image-19-de-jun-de-2026-21-07-12-2.png",
+  "https://i.ibb.co/kVVcnVZp/Chat-GPT-Image-19-de-jun-de-2026-21-07-13-3.png",
+  "https://i.ibb.co/YBjGqPT7/Chat-GPT-Image-19-de-jun-de-2026-21-07-13-4.png",
+  "https://i.ibb.co/svt4m3pF/Chat-GPT-Image-19-de-jun-de-2026-21-07-13-5.png",
+  "https://i.ibb.co/27tyyXYC/Chat-GPT-Image-19-de-jun-de-2026-21-07-14-6.png"
+];
+
+const carouselRow2 = [
+  "https://i.ibb.co/XfR0nb2x/Chat-GPT-Image-19-de-jun-de-2026-21-07-15-7.png",
+  "https://i.ibb.co/3y4MmgCM/Chat-GPT-Image-19-de-jun-de-2026-21-07-15-8.png",
+  "https://i.ibb.co/fdgChK8p/Chat-GPT-Image-19-de-jun-de-2026-21-07-15-9.png",
+  "https://i.ibb.co/5hKW3Qk0/Chat-GPT-Image-19-de-jun-de-2026-21-07-16-10.png",
+  "https://i.ibb.co/XxRTLmtn/Chat-GPT-Image-19-de-jun-de-2026-21-07-07-10.png",
+  "https://i.ibb.co/23SQPcxN/Chat-GPT-Image-19-de-jun-de-2026-21-07-06-7.png"
+];
 
 export default function App() {
   // Configurable values
@@ -108,29 +125,31 @@ export default function App() {
           <p className="text-base md:text-xl text-slate-700 font-normal leading-relaxed max-w-3xl mx-auto mb-10">
             Receba um PDF pronto para imprimir, com atividades coloridas, conteudistas e temáticas para deixar suas aulas de inglês mais criativas no período junino.
           </p>
+        </div>
 
-          {/* New Promotional Mockup (With borders and a floating motion animation) */}
-          <div className="my-8 flex justify-center bg-transparent relative z-10 w-full px-4 overflow-hidden">
-            <motion.div
-              animate={{
-                y: [0, -12, 0],
-              }}
-              transition={{
-                duration: 4.5,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut",
-              }}
-              className="p-1.5 md:p-3 border border-slate-300/40 bg-white/30 backdrop-blur-xs rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.06)] max-w-full md:max-w-5xl lg:max-w-6xl w-full transform hover:scale-[1.01] transition-transform duration-300"
-            >
-              <img 
-                src={mockupNew} 
-                alt="Atividades de São João" 
-                className="w-full h-auto bg-transparent object-contain select-none rounded-2xl"
-              />
-            </motion.div>
-          </div>
+        {/* New Promotional Mockup (With borders and a floating motion animation) - Rendered wider than standard parent */}
+        <div className="my-8 max-w-6xl lg:max-w-7xl mx-auto px-4 flex justify-center bg-transparent relative z-10 w-full overflow-hidden">
+          <motion.div
+            animate={{
+              y: [0, -12, 0],
+            }}
+            transition={{
+              duration: 4.5,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut",
+            }}
+            className="p-2 md:p-4 border border-slate-300/40 bg-white/30 backdrop-blur-xs rounded-3xl shadow-[0_25px_50px_rgba(0,0,0,0.07)] max-w-full w-full transform hover:scale-[1.015] transition-transform duration-300"
+          >
+            <img 
+              src={mockupNew} 
+              alt="Atividades de São João" 
+              className="w-full h-auto bg-transparent object-contain select-none rounded-2xl"
+            />
+          </motion.div>
+        </div>
 
+        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
           {/* Core Huge CTA Button */}
           <div className="mt-8">
             <button
@@ -161,7 +180,85 @@ export default function App() {
         </div>
 
         {/* Section bottom spacer layout */}
-        <div className="absolute bottom-0 left-0 right-0 h-10 bg-neutral-50 rounded-t-3xl" />
+        <div className="absolute bottom-0 left-0 right-0 h-10 bg-white rounded-t-3xl" />
+      </section>
+
+      {/* ---------------- CAROUSEL PREVIEW SECTION ---------------- */}
+      <section className="py-16 bg-white relative overflow-hidden" id="marquee-preview-section">
+        <div className="max-w-6xl mx-auto px-4 text-center mb-10 relative z-10">
+          <span className="text-xs font-mono font-bold uppercase text-accent-gold bg-amber-50 border border-amber-200/65 px-3.5 py-1.5 rounded-full tracking-wider">
+            Preview Real das Atividades 🌽
+          </span>
+          <h2 className="text-3xl md:text-4xl font-display font-extrabold text-primary leading-tight mt-4 mb-3">
+            Dê uma espiadinha no kit por dentro!
+          </h2>
+          <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto font-normal">
+            Páginas reais das atividades inclusas no PDF. Passe o mouse ou toque para pausar o carrossel.
+          </p>
+        </div>
+
+        {/* Large Highlight Preview Image */}
+        <div className="max-w-md md:max-w-lg mx-auto px-4 mb-14 relative z-10 hover:scale-[1.01] transition-transform duration-300">
+          <div className="bg-white rounded-3xl overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.06)] border border-slate-200/60 p-2 md:p-3">
+            <img 
+              src="https://i.ibb.co/3y4MmgCM/Chat-GPT-Image-19-de-jun-de-2026-21-07-15-8.png" 
+              alt="Atividade em destaque" 
+              className="w-full h-auto rounded-2xl select-none"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+        </div>
+
+        {/* Carousel rows container */}
+        <div className="flex flex-col gap-6 md:gap-8 overflow-hidden select-none">
+          {/* Row 1 (Marquee left) */}
+          <div className="w-full relative">
+            {/* Fade masks */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <div className="animate-marquee-left gap-4 md:gap-6 py-2">
+              {[...carouselRow1, ...carouselRow1].map((imgUrl, idx) => (
+                <div 
+                  key={`r1-${idx}`} 
+                  className="w-[160px] md:w-[240px] aspect-[1/1.41] flex-shrink-0 bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
+                >
+                  <img 
+                    src={imgUrl} 
+                    alt={`Preview Atividade ${idx % 6 + 1}`} 
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Row 2 (Marquee right) */}
+          <div className="w-full relative">
+            {/* Fade masks */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+            
+            <div className="animate-marquee-right gap-4 md:gap-6 py-2">
+              {[...carouselRow2, ...carouselRow2].map((imgUrl, idx) => (
+                <div 
+                  key={`r2-${idx}`} 
+                  className="w-[160px] md:w-[240px] aspect-[1/1.41] flex-shrink-0 bg-white rounded-2xl overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.04)] border border-slate-200/50 hover:shadow-xl hover:scale-[1.02] hover:-translate-y-1 transition-all duration-300"
+                >
+                  <img 
+                    src={imgUrl} 
+                    alt={`Preview Atividade ${idx % 6 + 7}`} 
+                    className="w-full h-full object-cover select-none pointer-events-none"
+                    referrerPolicy="no-referrer"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* ---------------- 2. DORES SECTION ---------------- */}
@@ -268,9 +365,9 @@ export default function App() {
               return (
                 <div 
                   key={sol.id} 
-                  className="bg-neutral-50/50 p-6 rounded-2xl border border-slate-100 hover:bg-neutral-50 hover:border-slate-300 hover:shadow-xs transition-all duration-300"
+                  className="bg-neutral-50/50 p-6 rounded-2xl border border-slate-100 hover:bg-neutral-50 hover:border-slate-300 hover:shadow-xs transition-all duration-300 flex flex-col items-center text-center"
                 >
-                  <div className="bg-white w-12 h-12 rounded-xl shadow-xs flex items-center justify-center border border-slate-100 mb-4 transform -rotate-1 hover:rotate-3 transition-transform">
+                  <div className="bg-white w-12 h-12 rounded-xl shadow-xs flex items-center justify-center border border-slate-100 mb-4 transform -rotate-1 hover:rotate-3 transition-transform mx-auto">
                     {icons[index % icons.length]}
                   </div>
                   <h3 className="font-display font-extrabold text-slate-900 text-base mb-2">
@@ -284,40 +381,7 @@ export default function App() {
             })}
           </div>
 
-          {/* Curricular themes block - very helpful for English educators */}
-          <div className="mt-16 p-8 bg-primary rounded-3xl text-white relative overflow-hidden">
-            <div className="absolute inset-0 bg-dot-pattern opacity-10 pointer-events-none" />
-            <div className="absolute -bottom-8 -right-8 opacity-20 pointer-events-none">
-              <Fogueira size={120} />
-            </div>
 
-            <div className="relative z-10 max-w-4xl mx-auto">
-              <h3 className="text-lg md:text-xl font-display font-bold text-accent-amber mb-4 flex items-center gap-2">
-                <FileCode className="w-5 h-5 text-accent-amber" />
-                Matriz Curricular de Atividades Cobertas no PDF:
-              </h3>
-              
-              <div className="flex flex-wrap gap-2.5">
-                {[
-                  "Simple Past", "Past Continuous", "Future with Will", "Going To", 
-                  "Modal Verbs", "Articles", "Comparatives", "Superlatives", 
-                  "Prepositions", "Passive Voice", "Mixed Grammar Review", 
-                  "Reading Comprehension", "Vocabulary", "Writing Practice"
-                ].map((tag) => (
-                  <span 
-                    key={tag} 
-                    className="bg-primary-light border border-white/10 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium text-slate-200 hover:border-accent-amber/40 hover:text-white transition-colors"
-                  >
-                    ✦ {tag}
-                  </span>
-                ))}
-              </div>
-              
-              <p className="text-xs text-slate-300 mt-4 leading-relaxed italic">
-                * Conteúdos desenvolvidos com base nos parâmetros do Ministério da Educação e competências avaliadas no ENEM/Ensino Médio!
-              </p>
-            </div>
-          </div>
 
         </div>
       </section>
@@ -643,16 +707,13 @@ export default function App() {
 
             {/* Left Column Graphic Certificate */}
             <div className="relative shrink-0 flex items-center justify-center text-center">
-              {/* Premium vector guarantee layout */}
-              <div className="bg-primary hover:scale-105 active:scale-100 transition-transform duration-350 cursor-pointer text-white w-32 h-32 md:w-40 md:h-40 rounded-full flex flex-col items-center justify-center border-4 border-accent-gold shadow-lg relative p-3">
-                <Award className="w-10 h-10 text-accent-gold mb-1" />
-                <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-slate-300">COMPROMISSO</span>
-                <span className="text-sm font-display font-black text-accent-amber">QUALIDADE</span>
-                <span className="text-[8px] font-mono text-slate-400">PEDAGÓGICA</span>
-                
-                {/* Visual mini-flags wrapped around circular elements */}
-                <span className="absolute -top-1 -left-1 text-xs">🎉</span>
-                <span className="absolute -bottom-1 -right-1 text-xs">🌽</span>
+              {/* Shield/guarantee seal with mixed blend for transparent background effect */}
+              <div className="hover:scale-105 active:scale-100 transition-transform duration-300 cursor-pointer w-36 h-36 md:w-44 md:h-44 flex items-center justify-center relative">
+                <img 
+                  src="https://i.ibb.co/wVjVLvc/download.jpg" 
+                  alt="Garantia de 7 dias" 
+                  className="w-full h-full object-contain select-none mix-blend-multiply"
+                />
               </div>
             </div>
 
@@ -661,12 +722,12 @@ export default function App() {
               
               {/* Title */}
               <h2 className="text-xl md:text-2xl font-display font-extrabold text-primary leading-tight mb-4">
-                Você sabe exatamente o que está recebendo
+                Garantia Incondicional de 7 Dias!
               </h2>
 
               {/* Text */}
               <p className="text-sm md:text-base text-slate-650 leading-relaxed mb-6">
-                Ao comprar, você recebe um produto digital em PDF com 50 atividades de inglês temáticas de São João, prontas para baixar, imprimir e aplicar em sala de aula.
+                O seu risco é absolutamente **zero**. Se por qualquer motivo você achar que o material com as 50 atividades juninas de inglês não é ideal para as suas turmas, basta solicitar o reembolso em até 7 dias. Devolveremos 100% do seu investimento de forma simples e rápida!
               </p>
 
               {/* Security item row */}
