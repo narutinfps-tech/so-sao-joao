@@ -33,6 +33,7 @@ import {
 import { PAIN_POINTS, BENEFITS, TESTIMONIALS, FAQ_ITEMS, ACTIVITY_PREVIEWS } from './data';
 import { Bandeirinhas, Fogueira, BalaoJunino, Milho, ChapeuPalha, Sanfona } from './components/JuninaDecorations';
 import { mockupBase64 as mockupNew } from './mockup_data';
+import { motion } from 'motion/react';
 
 export default function App() {
   // Configurable values
@@ -108,13 +109,26 @@ export default function App() {
             Receba um PDF pronto para imprimir, com atividades coloridas, conteudistas e temáticas para deixar suas aulas de inglês mais criativas no período junino.
           </p>
 
-          {/* New Promotional Mockup (Background removed) */}
-          <div className="my-8 flex justify-center bg-transparent relative z-10 w-full overflow-hidden">
-            <img 
-              src={mockupNew} 
-              alt="Atividades de São João" 
-              className="w-full max-w-full md:max-w-3xl h-auto bg-transparent object-contain select-none transform hover:scale-[1.01] transition-transform duration-300 filter drop-shadow-[0_12px_20px_rgba(0,0,0,0.18)]"
-            />
+          {/* New Promotional Mockup (With borders and a floating motion animation) */}
+          <div className="my-8 flex justify-center bg-transparent relative z-10 w-full px-4 overflow-hidden">
+            <motion.div
+              animate={{
+                y: [0, -12, 0],
+              }}
+              transition={{
+                duration: 4.5,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut",
+              }}
+              className="p-1.5 md:p-3 border border-slate-300/40 bg-white/30 backdrop-blur-xs rounded-3xl shadow-[0_20px_40px_rgba(0,0,0,0.06)] max-w-full md:max-w-5xl lg:max-w-6xl w-full transform hover:scale-[1.01] transition-transform duration-300"
+            >
+              <img 
+                src={mockupNew} 
+                alt="Atividades de São João" 
+                className="w-full h-auto bg-transparent object-contain select-none rounded-2xl"
+              />
+            </motion.div>
           </div>
 
           {/* Core Huge CTA Button */}
