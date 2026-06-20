@@ -9,8 +9,7 @@ import {
   ShieldCheck, 
   Award, 
   HelpCircle, 
-  Star, 
-  Printer, 
+  Printer,  
   Download, 
   Play, 
   Pause, 
@@ -32,7 +31,7 @@ import {
 import { PAIN_POINTS, BENEFITS, TESTIMONIALS, FAQ_ITEMS, ACTIVITY_PREVIEWS } from './data';
 import { Bandeirinhas, Fogueira, BalaoJunino, Milho, ChapeuPalha, Sanfona } from './components/JuninaDecorations';
 import { mockupBase64 as mockupNew } from './mockup_data';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 const carouselRow1 = [
   "https://i.ibb.co/27rQLrjP/Chat-GPT-Image-19-de-jun-de-2026-21-07-12-1.png",
@@ -50,6 +49,25 @@ const carouselRow2 = [
   "https://i.ibb.co/5hKW3Qk0/Chat-GPT-Image-19-de-jun-de-2026-21-07-16-10.png",
   "https://i.ibb.co/XxRTLmtn/Chat-GPT-Image-19-de-jun-de-2026-21-07-07-10.png",
   "https://i.ibb.co/23SQPcxN/Chat-GPT-Image-19-de-jun-de-2026-21-07-06-7.png"
+];
+
+const carouselPromoRow = [
+  "https://i.ibb.co/67PYQWm0/Chat-GPT-Image-19-de-jun-de-2026-21-07-04-1.png",
+  "https://i.ibb.co/X1ZsLvX/Chat-GPT-Image-19-de-jun-de-2026-21-07-04-2.png",
+  "https://i.ibb.co/sJ6XvQjR/Chat-GPT-Image-19-de-jun-de-2026-21-07-04-3.png",
+  "https://i.ibb.co/bjNbrKsw/Chat-GPT-Image-19-de-jun-de-2026-21-07-05-4.png",
+  "https://i.ibb.co/HL446NFh/Chat-GPT-Image-19-de-jun-de-2026-21-07-05-5.png",
+  "https://i.ibb.co/WWQGRX5k/Chat-GPT-Image-19-de-jun-de-2026-21-07-06-6.png",
+  "https://i.ibb.co/6cJKH8CM/Chat-GPT-Image-19-de-jun-de-2026-21-07-06-8.png",
+  "https://i.ibb.co/kgGdX9kd/Chat-GPT-Image-19-de-jun-de-2026-21-07-07-9.png"
+];
+
+const testimonialImages = [
+  "https://i.ibb.co/M5fzzPkQ/depoimento-Luane.webp",
+  "https://i.ibb.co/MyhM1zzQ/depoimento-Luh.webp",
+  "https://i.ibb.co/v6k9yz7v/depoimento-Pri.webp",
+  "https://i.ibb.co/TMCZb9XP/depoimento-Rosangela.webp",
+  "https://i.ibb.co/BVXWp8zx/depoimento-Screenshot-2.webp"
 ];
 
 export default function App() {
@@ -88,8 +106,105 @@ export default function App() {
     return () => clearInterval(interval);
   }, [isVideoPlaying]);
 
+  // Live sales notifications state and cycle
+  const [activeNotification, setActiveNotification] = useState<{
+    name: string;
+    city: string;
+    plan: string;
+    time: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const buyers = [
+      { name: "Profª Adriana Silva", city: "Campinas - SP", plan: "Kit Completo + Bônus", time: "acabou de comprar" },
+      { name: "Juliana Medeiros", city: "São Paulo - SP", plan: "Kit Completo + Bônus", time: "há 45 seg" },
+      { name: "Sandra Mara", city: "Porto Alegre - RS", plan: "Kit Completo + Bônus", time: "acabou de comprar" },
+      { name: "Profª Luana Torres", city: "Salvador - BA", plan: "Kit Completo + Bônus", time: "há 1 min" },
+      { name: "Juliana Farias", city: "Belo Horizonte - MG", plan: "Kit Essencial", time: "há 2 min" },
+      { name: "Profª Renata Gomes", city: "Rio de Janeiro - RJ", plan: "Kit Completo + Bônus", time: "há 3 min" },
+      { name: "Beatriz Lemos", city: "Goiânia - GO", plan: "Kit Completo + Bônus", time: "acabou de comprar" },
+      { name: "Patrícia Vieira", city: "Recife - PE", plan: "Kit Completo + Bônus", time: "há 50 seg" },
+      { name: "Profª Silvana Castro", city: "Fortaleza - CE", plan: "Kit Completo + Bônus", time: "há 2 min" },
+      { name: "Marcela Oliveira", city: "Florianópolis - SC", plan: "Kit Essencial", time: "há 4 min" },
+      { name: "Daniela Soares", city: "Natal - RN", plan: "Kit Completo + Bônus", time: "acabou de comprar" },
+      { name: "Profª Letícia Barbosa", city: "Brasília - DF", plan: "Kit Completo + Bônus", time: "há 1 min" },
+      { name: "Profª Cláudia Ramos", city: "Curitiba - PR", plan: "Kit Completo + Bônus", time: "acabou de comprar" }
+    ];
+
+    let timer: any;
+    let cycleTimeout: any;
+
+    const showRandomNotification = () => {
+      const randomIndex = Math.floor(Math.random() * buyers.length);
+      setActiveNotification(buyers[randomIndex]);
+
+      // Show for 5.5 seconds, then hide
+      timer = setTimeout(() => {
+        setActiveNotification(null);
+        // Interval to space them: random gap of 11 to 18 seconds
+        const nextGap = Math.random() * 7000 + 11000;
+        cycleTimeout = setTimeout(showRandomNotification, nextGap);
+      }, 5500);
+    };
+
+    // First appearance after 3 seconds
+    const initialTimeout = setTimeout(showRandomNotification, 3000);
+
+    return () => {
+      clearTimeout(initialTimeout);
+      clearTimeout(timer);
+      clearTimeout(cycleTimeout);
+    };
+  }, []);
+
   return (
     <div className="min-h-screen bg-neutral-50 text-slate-800 font-sans antialiased relative selection:bg-accent-amber selection:text-primary overflow-x-hidden">
+      
+      {/* Floating Sales Notifications at the top right */}
+      <div className="fixed top-2 md:top-4 right-2 md:right-4 z-50 pointer-events-none w-full max-w-[280px]">
+        <AnimatePresence mode="wait">
+          {activeNotification && (
+            <motion.div
+              initial={{ opacity: 0, x: 60, scale: 0.95 }}
+              animate={{ opacity: 1, x: 0, scale: 1 }}
+              exit={{ opacity: 0, x: 40, scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="bg-white/95 backdrop-blur-sm shadow-xl border border-emerald-500/10 rounded-xl p-3 flex shadow-emerald-950/5 items-start gap-2.5 pointer-events-auto relative overflow-hidden"
+            >
+              {/* Subtle green active dot pulse indicator */}
+              <div className="mt-1 shrink-0 relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+              </div>
+
+              {/* Text content */}
+              <div className="flex-1 min-w-0 pr-2">
+                <p className="text-[11px] font-bold text-slate-800 truncate leading-tight">
+                  {activeNotification.name}
+                </p>
+                <p className="text-[10px] text-slate-500 leading-normal">
+                  de {activeNotification.city}
+                </p>
+                <p className="text-[11px] text-slate-700 font-medium leading-normal mt-0.5">
+                  adquiriu o <span className="text-emerald-600 font-bold">{activeNotification.plan}</span>
+                </p>
+                <p className="text-[9px] text-slate-400 mt-1 font-mono">
+                  {activeNotification.time}
+                </p>
+              </div>
+
+              {/* Simple subtle dismiss button */}
+              <button 
+                onClick={() => setActiveNotification(null)}
+                className="text-slate-400 hover:text-slate-600 transition-colors p-0.5"
+                title="Fechar"
+              >
+                <span className="text-xs font-bold font-sans">✕</span>
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
       
       {/* BANDEIRINHAS TOP DECORATION */}
       {/* ---------------- 1. HERO SECTION ---------------- */}
@@ -386,6 +501,168 @@ export default function App() {
         </div>
       </section>
 
+      {/* ---------------- SEÇÃO CAROSSEL ADICIONAL (ACIMA DA OFERTA) ---------------- */}
+      <section className="py-16 bg-neutral-50 relative overflow-hidden" id="carrossel-extra-section">
+        <div className="max-w-6xl mx-auto px-4 text-center mb-10 relative z-10">
+          <span className="text-xs font-mono font-bold uppercase text-amber-700 bg-amber-100/80 border border-amber-200/60 px-3.5 py-1.5 rounded-full tracking-wider">
+            Material 100% Pronto para Imprimir 🖍️
+          </span>
+          <h2 className="text-3xl md:text-4xl font-display font-extrabold text-primary leading-tight mt-4 mb-3">
+            Atividades lúdicas de alto engajamento pedagógico
+          </h2>
+          <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto font-normal">
+            Mais algumas amostras exclusivas das folhas de atividades que você vai receber imediatamente após a compra.
+          </p>
+        </div>
+
+        {/* Horizontal Infinite Single-Row Carousel (No borders/frames/molduras around the images as requested) */}
+        <div className="w-full relative overflow-hidden select-none">
+          {/* Subtle side fade-outs for high visual finish */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-r from-neutral-50 to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-12 md:w-32 bg-gradient-to-l from-neutral-50 to-transparent z-10 pointer-events-none" />
+
+          <div className="animate-marquee-left gap-4 md:gap-5 py-2">
+            {[...carouselPromoRow, ...carouselPromoRow].map((imgUrl, idx) => (
+              <div 
+                key={`promo-${idx}`} 
+                className="w-[150px] md:w-[220px] aspect-[1/1.41] flex-shrink-0 overflow-hidden hover:scale-[1.03] transition-transform duration-300"
+              >
+                <img 
+                  src={imgUrl} 
+                  alt={`Atividade Junina PDF ${idx % 8 + 1}`} 
+                  className="w-full h-full object-cover select-none pointer-events-none rounded-xl"
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ---------------- SEÇÃO DE BÔNUS EXCLUSIVOS ---------------- */}
+      <section className="py-20 bg-white relative overflow-hidden" id="bonus-section">
+        {/* Decorative elements */}
+        <div className="absolute top-10 right-10 opacity-10 pointer-events-none">
+          <Sanfona size={100} />
+        </div>
+        <div className="absolute bottom-10 left-10 opacity-10 pointer-events-none">
+          <ChapeuPalha size={100} />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+          
+          <div className="text-center mb-16">
+            <span className="text-xs font-mono font-bold uppercase text-amber-700 bg-amber-100/80 border border-amber-200/60 px-3.5 py-1.5 rounded-full tracking-wider inline-flex items-center gap-1.5">
+              <Sparkles className="w-3.5 h-3.5" /> BÔNUS EXCLUSIVOS E GRATUITOS
+            </span>
+            <h2 className="text-3xl md:text-5xl font-display font-extrabold text-primary leading-tight mt-4 mb-4">
+              Garanta seu Kit hoje e leve 2 Bônus Especiais!
+            </h2>
+            <p className="text-slate-600 text-sm md:text-base max-w-2xl mx-auto font-normal">
+              Preparamos dois super complementos pedagógicos para enriquecer ainda mais suas aulas de inglês e motivar os seus estudantes.
+            </p>
+          </div>
+
+          {/* Bonus Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            
+            {/* Bonus 1: Copa do Mundo */}
+            <div className="bg-neutral-50 rounded-3xl border border-slate-200/60 p-6 md:p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-300">
+              <div>
+                <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-amber-600 bg-amber-100/60 rounded px-2.5 py-1 inline-block mb-4">
+                  BÔNUS #1 • SUPER KIT EXTRA
+                </span>
+                <h3 className="text-xl md:text-2xl font-display font-black text-slate-900 mb-2 leading-snug">
+                  Atividades de Inglês - Copa do Mundo
+                </h3>
+                <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                  Um material temático incrível com **mais de 50 atividades exclusivas de inglês** baseadas na Copa do Mundo. Ideal para trabalhar vocabulário esportivo, leitura, cultura e engajamento coletivo!
+                </p>
+
+                {/* Bullet benefits */}
+                <div className="space-y-2.5 mb-8">
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Mais de 50 páginas de atividades temáticas esportivas prontas para a aula.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Exercícios de vocabulário, leitura, gramática contextuais e divertidos.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Formato em PDF de alta qualidade para download e impressão ilimitada.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bonus Image Showcase */}
+              <div className="mt-4 bg-white rounded-2xl overflow-hidden shadow-xs border border-slate-200/40 p-2 transform hover:scale-[1.02] transition-transform duration-300">
+                <img 
+                  src="https://i.ibb.co/4RP4sFdH/Chat-GPT-Image-19-de-jun-de-2026-21-23-08.png" 
+                  alt="Bonus 1 - Copa do Mundo" 
+                  className="w-full h-auto rounded-xl object-contain select-none"
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* Bonus 2: Certificados */}
+            <div className="bg-neutral-50 rounded-3xl border border-slate-200/60 p-6 md:p-8 flex flex-col justify-between hover:shadow-lg transition-all duration-300">
+              <div>
+                <span className="text-[10px] font-mono font-bold tracking-wider uppercase text-emerald-600 bg-emerald-100/60 rounded px-2.5 py-1 inline-block mb-4">
+                  BÔNUS #2 • ESTÍMULO EXCLUSIVO
+                </span>
+                <h3 className="text-xl md:text-2xl font-display font-black text-slate-900 mb-2 leading-snug">
+                  Certificados Oficiais de Participação
+                </h3>
+                <p className="text-sm text-slate-600 mb-6 leading-relaxed">
+                  Recompense o esforço e a brilhante participação dos seus estudantes com **lindos certificados impressos** personalizados tanto para as Atividades de São João quanto para as Atividades da Copa do Mundo!
+                </p>
+
+                {/* Bullet benefits */}
+                <div className="space-y-2.5 mb-8">
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Certificados temáticos coloridos e elegantes prontos para uso.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Prontos para preenchimento com nome do aluno, professor e data.</span>
+                  </div>
+                  <div className="flex items-start gap-2.5 text-xs text-slate-700">
+                    <CheckCircle className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <span>Aumente a autoestima dos alunos e o orgulho das famílias.</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bonus Image Showcase */}
+              <div className="mt-4 bg-white rounded-2xl overflow-hidden shadow-xs border border-slate-200/40 p-2 transform hover:scale-[1.02] transition-transform duration-300">
+                <img 
+                  src="https://i.ibb.co/xKpPMVn9/Chat-GPT-Image-19-de-jun-de-2026-21-27-00.png" 
+                  alt="Bonus 2 - Certificados Oficiais" 
+                  className="w-full h-auto rounded-xl object-contain select-none"
+                  referrerPolicy="no-referrer"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+          </div>
+
+          {/* Underneath CTA notice */}
+          <div className="mt-12 text-center">
+            <p className="text-base font-semibold text-slate-800">
+              🎁 Ambos os bônus estão <span className="text-emerald-600 underline decoration-2 decoration-accent-gold decoration-solid">100% inclusos sem custo extra exclusivamente no Plano Premium (R$ 27,90)</span>!
+            </p>
+          </div>
+
+        </div>
+      </section>
+
       {/* ---------------- 4. CARD DE OFERTA ---------------- */}
       <section className="py-20 bg-neutral-100 relative overflow-hidden" id="oferta-section">
         
@@ -448,16 +725,23 @@ export default function App() {
                 {/* Feature List (Centered block, left-aligned items for readability) */}
                 <div className="w-full max-w-[290px] mx-auto text-left space-y-3.5 my-4">
                   {[
-                    "PDF completo com 50 Atividades de inglês",
-                    "Temática festiva e ilustrada de São João",
-                    "Conteúdos gramaticais e leitura (BNCC)",
-                    "Pronto para imprimir no formato padrão A4",
-                    "Gabaritos de todas as questões inclusos",
-                    "Licença padrão para uso individual"
+                    { text: "PDF completo com 50 Atividades de inglês", included: true },
+                    { text: "Temática festiva e ilustrada de São João", included: true },
+                    { text: "Conteúdos gramaticais e leitura (BNCC)", included: true },
+                    { text: "Pronto para imprimir no formato padrão A4", included: true },
+                    { text: "Acesso Vitalício ao material do Kit", included: true },
+                    { text: "Envio rápido no E-mail e WhatsApp", included: true },
+                    { text: "Licença padrão para uso individual", included: true },
+                    { text: "Bônus Copa do Mundo (+50 atividades)", included: false },
+                    { text: "Certificados Oficiais inclusos", included: false }
                   ].map((feat, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-650">
-                      <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                      <span className="leading-tight">{feat}</span>
+                    <div key={idx} className="flex items-start gap-2.5 text-xs">
+                      {feat.included ? (
+                        <CheckCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                      ) : (
+                        <span className="w-4 h-4 text-red-550 shrink-0 mt-0.5 font-bold flex items-center justify-center text-[10px]">✕</span>
+                      )}
+                      <span className={`leading-tight ${feat.included ? "text-slate-650" : "text-slate-400 line-through"}`}>{feat.text}</span>
                     </div>
                   ))}
                 </div>
@@ -510,7 +794,7 @@ export default function App() {
 
                 {/* Plan Description */}
                 <p className="text-xs text-slate-300 max-w-xs mx-auto mb-6 leading-relaxed">
-                  Para professores que desejam material completo, respostas comentadas detalhadas e bônus lúdicos inéditos.
+                  Para professores que desejam material completo com acesso vitalício imediato no E-mail e WhatsApp, além de todos os bônus.
                 </p>
 
                 {/* Pricing Block (Beautified & Centered with gold/amber premium colors) */}
@@ -533,10 +817,12 @@ export default function App() {
                     "Temática festiva e ilustrada de São João",
                     "Conteúdos gramaticais e leitura (BNCC)",
                     "Pronto para imprimir no formato padrão A4",
-                    "Gabaritos + Chaves de Respostas Comentadas",
+                    "Acesso Vitalício direto e permanente",
+                    "Envio imediato no E-mail e WhatsApp",
+                    "🔥 BÔNUS EXTRA: Copa do Mundo (+50 atividades)",
+                    "🔥 BÔNUS EXTRA: Certificados Oficiais Inclusos",
                     "BÔNUS: Vocabulário Junino & Flashcards",
                     "BÔNUS: Guia de Aplicação da Festividade",
-                    "Compartilhamento livre na mesma escola (até 3 prof.)",
                   ].map((feat, idx) => (
                     <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-200">
                       <CheckCircle className="w-4 h-4 text-accent-gold shrink-0 mt-0.5" />
@@ -611,62 +897,18 @@ export default function App() {
             </p>
           </div>
 
-          {/* Depoimentos Cards Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {TESTIMONIALS.map((dep, dIdx) => {
-              // Create dynamic pastel background variations for the rating stars
-              const stars = Array(dep.rating).fill(0);
-              const avatarInitials = dep.author.split(' ')[0][0] + (dep.author.split(' ').length > 1 ? dep.author.split(' ')[1][0] : '');
-              
-              const gradList = [
-                'from-[#D9383A] to-[#E76F51]', // warm red orange
-                'from-[#15305B] to-[#2A9D8F]', // cold blue green
-                'from-[#E76F51] to-[#FFC93C]'  // orange yellow
-              ];
-
-              return (
-                <div 
-                  key={dep.id}
-                  className="bg-neutral-50/75 p-6 rounded-2xl border border-slate-200/50 flex flex-col justify-between hover:shadow-md transition-shadow duration-300 relative"
-                >
-                  {/* Decorative quotes graphic */}
-                  <span className="absolute top-4 right-6 text-slate-200 font-serif text-6xl leading-[0] select-none pointer-events-none">
-                    “
-                  </span>
-
-                  <div>
-                    {/* Stars rating */}
-                    <div className="flex items-center gap-1 mb-4">
-                      {stars.map((_, sIdx) => (
-                        <Star key={sIdx} className="w-4 h-4 text-accent-gold fill-accent-gold" />
-                      ))}
-                    </div>
-
-                    {/* Testimonial Core Text */}
-                    <p className="text-slate-600 text-sm md:text-base leading-relaxed italic mb-6">
-                      {dep.text}
-                    </p>
-                  </div>
-
-                  {/* Testimonial Author Meta */}
-                  <div className="flex items-center gap-3 border-t border-slate-200/60 pt-4 mt-auto">
-                    {/* Initial circle avatar */}
-                    <div className={`w-10 h-10 rounded-full bg-gradient-to-tr ${gradList[dIdx % gradList.length]} flex items-center justify-center text-white font-bold text-xs uppercase font-mono shadow-inner`}>
-                      {avatarInitials}
-                    </div>
-                    <div>
-                      {/* Name - Mariana S. — Professora de Inglês */}
-                      <p className="font-display font-extrabold text-slate-800 text-xs tracking-wide">
-                        {dep.author}
-                      </p>
-                      <p className="text-[10px] text-slate-500 font-mono tracking-wider font-semibold uppercase">
-                        {dep.role}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
+          {/* Depoimentos Cards Grid - Replaced with image stack as requested */}
+          <div className="max-w-2xl mx-auto flex flex-col gap-8 md:gap-12">
+            {testimonialImages.map((imgUrl, idx) => (
+              <img 
+                key={idx}
+                src={imgUrl} 
+                alt={`Depoimento Reais ${idx + 1}`} 
+                className="w-full h-auto select-none rounded shadow-sm opacity-95 hover:opacity-100 transition-opacity duration-300"
+                referrerPolicy="no-referrer"
+                loading="lazy"
+              />
+            ))}
           </div>
 
           {/* Social Proof metrics */}
